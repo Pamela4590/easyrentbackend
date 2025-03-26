@@ -21,12 +21,16 @@ const userSchema= new Schema(
                       required:true
 
            },
+           userPhone:{
+           type:Number,
+           required:true
+           },
             userRole:{
 
                 type:String,
                 default: "user",
                 enum:["user", "admin"],
-                required:true,
+                required:false,
             },
             tokens:{
                 accessToken:{

@@ -9,7 +9,7 @@ export const Register =async (req,res) =>{
 
     try{
         const{
-            userName,userEmail,userPassword,UserRole} =req.body 
+            userName,userEmail,userPassword,userPhone,UserRole} =req.body 
 
         const existingUser = await User.findOne({userEmail});
         if(existingUser){
@@ -18,7 +18,7 @@ export const Register =async (req,res) =>{
        const hashedPassword = await bcrypt.hash(userPassword,10);
 
        const user = new User({
-        userName,userEmail,userPassword:hashedPassword,UserRole
+        userName,userEmail,userPassword:hashedPassword,userPhone,UserRole
        });
        user.tokens.acessToken=generateAccessToken(user);
        await user.save();
@@ -28,6 +28,7 @@ export const Register =async (req,res) =>{
           _id:user._id, 
           userName: user.userName,
           userEmail: user.userEmail,
+          userPhone:user.userPhone,
           userRole: user.userRole,
             tokens:{
                 accessToken:user.tokens.accessToken,
