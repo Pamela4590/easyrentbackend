@@ -10,18 +10,30 @@ dotenv.config();
 const db_user = process.env.DB_USER;
 const db_name = process.env.DB_NAME;
 const db_pass = process.env.DB_PASS;
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 5000;
 
 const app = express();
+const allowedOrigins = ["https://easy-rent1.vercel.app", "http://localhost:5173"];
+
 const corsOptions = {
-  origin: "*", // Accept requests from any origin
-  optionsSuccessStatus: 200,
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, origin);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
   credentials: true, // Allow cookies & authentication headers
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  allowedHeaders: "Content-Type,Authorization",
 };
 
-
-// Use CORS middleware with options
+// Use the updated CORS middleware
 app.use(cors(corsOptions));
+
+// Handle preflight requests
+app.options("*", cors(corsOptions));
+
 
 app.use(bodyParser.json());
 app.use(express.json());
