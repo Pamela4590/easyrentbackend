@@ -13,14 +13,20 @@ const db_pass = process.env.DB_PASS;
 const port = process.env.PORT || 3000;
 
 const app = express();
+const corsOptions = {
+  allowedHeaders: ["Authorization", "Content-Type"],
+  methods: ["GET", "POST", "PUT", "UPDATE", "DELETE"],
+  origin: ["http://localhost:5173"], // Allow frontend
+};
+app.use(cors(corsOptions)); // Ensure CORS is configured properly
 
-// Corrected CORS configuration
-app.use(cors({
-  origin: 'https://easy-rent1.vercel.app ,http://localhost:5173/', // Remove the extra http://
-  credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization']
-}));
+// // Corrected CORS configuration
+// app.use(cors({
+//   origin: 'https://easy-rent1.vercel.app ,http://localhost:5173/', // Remove the extra http://
+//   credentials: true,
+//   methods: ['GET', 'POST', 'PUT', 'DELETE'],
+//   allowedHeaders: ['Content-Type', 'Authorization']
+// }));
 // Middleware configurations
 app.use(bodyParser.json());
 app.use(express.json());
