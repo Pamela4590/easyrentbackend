@@ -16,7 +16,7 @@ const app = express();
 
 // Corrected CORS configuration
 app.use(cors({
-  origin: '*', // Remove the extra http://
+  origin: 'https://easy-rent1.vercel.app', // Remove the extra http://
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization']
