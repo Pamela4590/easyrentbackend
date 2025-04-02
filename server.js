@@ -14,20 +14,15 @@ const port = process.env.PORT || 3000;
 
 const app = express();
 const corsOptions = {
-  allowedHeaders: ["Authorization", "Content-Type"],
-  methods: ["GET", "POST", "PUT", "UPDATE", "DELETE"],
-  origin: ["http://localhost:5173"], // Allow frontend
+  origin: "*", // Accept requests from any origin
+  optionsSuccessStatus: 200,
+  credentials: true, // Allow cookies & authentication headers
 };
-app.use(cors(corsOptions)); // Ensure CORS is configured properly
 
-// // Corrected CORS configuration
-// app.use(cors({
-//   origin: 'https://easy-rent1.vercel.app ,http://localhost:5173/', // Remove the extra http://
-//   credentials: true,
-//   methods: ['GET', 'POST', 'PUT', 'DELETE'],
-//   allowedHeaders: ['Content-Type', 'Authorization']
-// }));
-// Middleware configurations
+
+// Use CORS middleware with options
+app.use(cors(corsOptions));
+
 app.use(bodyParser.json());
 app.use(express.json());
 
